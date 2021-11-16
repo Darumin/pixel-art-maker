@@ -1,45 +1,57 @@
 
-let body = document.querySelector('body');
-console.log(body);
-body.style.backgroundColor = 'black';
-let canvas = document.getElementById('canvas');
-let brushColor = 'black';
-let isDrawing = false;
+(function() {
+    let body = document.querySelector('body');
+    body.style.backgroundColor = 'black';
 
-for(let i = 0; i < 555; i++) {
-    let pixel = document.createElement('div');
-    pixel.className = 'nice';
-    canvas.appendChild(pixel);
-}
+    let canvas = document.getElementById('canvas');
+    let brushColor = 'black';
+    let isDrawing = false;
 
-canvas.addEventListener('mousedown', () => {
-    isDrawing = true;
-})
+    const quitStroke = () => {
+        isDrawing = false;
+    };
 
-canvas.addEventListener('mousemove', (event) => {
-    if (event.target === canvas || isDrawing !== true) {
-        return;
+    for(let i = 0; i < 555; i++) {
+        let pixel = document.createElement('div');
+        pixel.className = 'pixel';
+        canvas.appendChild(pixel);
     }
 
-    event.target.classList[1] = null;
-    event.target.classList.add(brushColor);
-})
+    canvas.addEventListener('mousedown', () => {
+        isDrawing = true;
+    })
 
-canvas.addEventListener('mouseup', () => {
-    isDrawing = false;
-})
+    canvas.addEventListener('mouseenter', (event) => {
+        if (event.target === canvas || isDrawing !== true) {
+            return;
+        }
 
-let palette = document.getElementById('palette');
-let swatch = document.createElement('div');
-swatch.className = 'swatch';
-swatch.classList.add('red');
+        event.target.style.backgroundColor = brushColor;
+    })
 
-palette.appendChild(swatch);
+    canvas.addEventListener('mouseup', quitStroke);
+    canvas.addEventListener('mouseleave', quitStroke);
 
-palette.addEventListener('click', (event) => {
-    if (event.target === palette) {
-        return;
+    let palette = document.getElementById('palette');
+
+    let colors = [
+        'white', 'black','beige', 'palevioletred',
+        'indianred', 'coral', 'khaki', 'saddlebrown',
+        'mediumspringgreen', 'darkcyan', 'royalblue',
+        'rebeccapurple', 'darkslategrey', 
+    ];
+
+    for(const color of colors) {
+        let swatch = document.createElement('div');
+        swatch.className = 'swatch';
+        swatch.classList.add(color);
+        swatch.style.backgroundColor = color;
+        palette.appendChild(swatch);
     }
 
-    brushColor = event.target.classList[1];
-})
+    palette.addEventListener('click', (event) => {
+        if (event.target === palette) { return; }
+        brushColor = event.target.classList[1];
+    })
+})();
+
