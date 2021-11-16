@@ -1,0 +1,28 @@
+#canvas {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1000px;
+}
+
+.nice {
+    background-color: white;
+    width: 25px;
+    height: 25px;
+    border: 1px gray solid;
+}
+
+.black {
+    background-color: black;
+}
+
+.red {
+    background-color: red;
+}
+
+.swatch {
+    background-color: red;
+    margin-top: 25px;
+    width: 25px;
+    height: 25px;
+    border: none;
+}
